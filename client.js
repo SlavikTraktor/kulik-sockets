@@ -1,12 +1,13 @@
-var tcp = require('net');
-var udp = require('dgram');
+const tcp = require("net");
+const udp = require("dgram");
+const config = require("./config");
 
 function sendCountToTCPPort(count, port) {
   [...new Array(count)].forEach(() => {
     const client = new tcp.Socket();
 
-    client.connect(port, '127.0.0.1', function() {
-      client.write('Hello, server! Love, Client.', () => {
+    client.connect(port, "127.0.0.1", function() {
+      client.write("Hello, server! Love, Client.", () => {
         client.destroy();
       });
     });
@@ -19,15 +20,21 @@ function sendCountToTCPPort(count, port) {
 
 function sendCountToUDPPort(count, port) {
   [...new Array(count)].forEach(() => {
-    var client = udp.createSocket('udp4');
-    var data = Buffer.from('Hello, server! Love, Client.');
+    const client = udp.createSocket("udp4");
+    const data = Buffer.from("Hello, server! Love, Client.");
 
-    client.send(data, port, '127.0.0.1', function(err){
+    client.send(data, port, "127.0.0.1", function(err) {
       client.close();
     });
   });
 }
 
+const maximumMessagesCount = 4;
 
-sendCountToTCPPort(6, 1234);
-// sendCountToUDPPort(2, 1232);
+config.tcpPorts.forEach(port => {
+  sendCountToTCPPort(Math.ceil(Math.random() * maximumMessagesCount), port);
+});
+
+config.udpPorts.forEach(port => {
+  sendCountToUDPPort(Math.ceil(Math.random() * maximumMessagesCount), port);
+});

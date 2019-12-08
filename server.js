@@ -1,9 +1,9 @@
-var tcp = require("net");
-var udp = require("dgram");
+const tcp = require("net");
+const udp = require("dgram");
+const config = require("./config");
 
-const tcpPorts = [1230, 1234, 1235];
-
-const udpPorts = [1231, 1232];
+const tcpPorts = config.tcpPorts;
+const udpPorts = config.udpPorts;
 
 const packageCountOnTCPPort = new Map();
 const packageCountOnUDPPort = new Map();
@@ -54,9 +54,7 @@ const getResult = () => {
     });
   });
 
-
-
-  return result.sort((a, b) => ((b.port > a.port)? -1: 1));
+  return result.sort((a, b) => (b.port > a.port ? -1 : 1));
 };
 
 module.exports = {
