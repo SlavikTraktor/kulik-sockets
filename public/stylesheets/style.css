@@ -1,0 +1,27 @@
+body {
+  padding: 35px;
+  background-color: #fff9e6;
+}
+
+h1 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: flex;
+  align-items: center;
+  color: rgb(80, 80, 80);
+}
+
+h1 .small {
+  font-size: medium;
+  color: rgb(139, 139, 139);
+  padding-left: 25px;
+  padding-top: 8px;
+}
+
+.pink {
+  color: rgb(255, 99, 132);
+}
+
+.blue {
+  
+  color: rgb(75, 192, 192);
+}

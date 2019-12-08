@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TCP and UDP messages count</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <h1>TCP and UDP messages count<span class="small">UDP (<span class="pink">pink</span>), TCP (<span class="blue">blue</span>)</span></h1>
+
+    <div class="chart-container">
+      <canvas id="tcpChart" width="400" height="150"></canvas>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script>
+      let res = JSON.parse('<%- res %>');
+
+      const labels = res.map(v => v.port);
+      const dataset = res.map(v => v.count);
+      const bgColors = res.map(v =>
+        v.type == "tcp" ? "rgba(75, 192, 192, 0.4)" : "rgba(255, 99, 132, 0.4)"
+      );
+      const borderColors = res.map(v =>
+        v.type == "tcp" ? "rgb(75, 192, 192)" : "rgb(255, 99, 132)"
+      );
+
+      const ctx = document.getElementById("tcpChart").getContext("2d");
+      const myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: ["Messages count"],
+              data: dataset,
+              backgroundColor: bgColors,
+              borderColor: borderColors,
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true
+                }
+              }
+            ]
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
