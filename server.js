@@ -29,7 +29,7 @@ tcpPorts.forEach(port => {
   });
 
   console.log("tcp listen " + port);
-  server.listen(port, "127.0.0.1");
+  server.listen(port, config.ip);
 });
 
 udpPorts.forEach(port => {
@@ -45,7 +45,7 @@ udpPorts.forEach(port => {
   });
 
   console.log("udp listen " + port);
-  server.bind(port);
+  server.bind(port, config.ip);
 });
 
 const getResult = () => {

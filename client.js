@@ -6,7 +6,7 @@ function sendCountToTCPPort(count, port) {
   [...new Array(count)].forEach(() => {
     const client = new tcp.Socket();
 
-    client.connect(port, "127.0.0.1", function() {
+    client.connect(port, config.ip, function() {
       client.write("Hello, server! Love, Client.");
     });
 
@@ -22,7 +22,7 @@ function sendCountToUDPPort(count, port) {
     const client = udp.createSocket("udp4");
     const data = Buffer.from("Hello, server! Love, Client.");
 
-    client.send(data, port, "127.0.0.1");
+    client.send(data, port, config.ip);
 
     client.on("message", (data) => {
       console.log(`UDP ${port} ${data.toString()}`);

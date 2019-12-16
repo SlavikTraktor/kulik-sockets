@@ -1,12 +1,13 @@
-var express = require("express");
-var path = require("path");
-var WebSocket =  require('ws');
+const express = require("express");
+const path = require("path");
+const WebSocket = require("ws");
 
-var listen = require("./server");
+const listen = require("./server");
+const config = require("./config");
 
-var app = express();
+const app = express();
 
-let expressWs = require('express-ws')(app)
+let expressWs = require("express-ws")(app);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -20,9 +21,7 @@ app.get("/", function(req, res, next) {
   });
 });
 
-app.ws('/socket', function(ws, req, next) {
-})
-
+app.ws("/socket", function(ws, req, next) {});
 
 listen.subscribe("test", () => {
   expressWs.getWss().clients.forEach(function each(client) {
@@ -30,10 +29,10 @@ listen.subscribe("test", () => {
       client.send(JSON.stringify(listen.ports()));
     }
   });
-})
+});
 
-app.listen(3000, function() {
-  console.log('Started, port: 3000');
-})
+app.listen(config.port, function() {
+  console.log("Started, port: 3000");
+});
 
 //module.exports = app;
