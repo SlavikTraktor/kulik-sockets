@@ -14,6 +14,7 @@ tcpPorts.forEach(port => {
     socket.on("data", data => {
       const oldCount = packageCountOnTCPPort.get(port);
       packageCountOnTCPPort.set(port, oldCount + 1);
+      socket.write('OK');
       console.log("tcp", port, packageCountOnTCPPort.get(port));
     });
   });
@@ -25,9 +26,12 @@ tcpPorts.forEach(port => {
 udpPorts.forEach(port => {
   packageCountOnUDPPort.set(port, 0);
   const server = udp.createSocket("udp4");
-  server.on("message", data => {
+  server.on("message", (data, rinfo) => {
     const oldCount = packageCountOnUDPPort.get(port);
     packageCountOnUDPPort.set(port, oldCount + 1);
+
+    const resp = Buffer.from('OK');
+    server.send(resp, rinfo.port, rinfo.address);
     console.log("udp", port, packageCountOnUDPPort.get(port));
   });
 
