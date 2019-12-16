@@ -55,7 +55,7 @@
         }
       });
 
-      var ws = new WebSocket('ws://localhost:3000/socket');    // event emmited when connected
+      var ws = new WebSocket('ws://<%= socketAdress %>/socket');    // event emmited when connected
       ws.onopen = function () {
           console.log('websocket is connected ...')        // sending a send event to websocket server
           ws.send('connected')

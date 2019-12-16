@@ -17,7 +17,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", function(req, res, next) {
   res.render("index", {
-    res: JSON.stringify(listen.ports())
+    res: JSON.stringify(listen.ports()),
+    socketAdress: `${config.ip}:${config.port}`, 
   });
 });
 
