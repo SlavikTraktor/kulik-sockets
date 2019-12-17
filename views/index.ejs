@@ -19,6 +19,15 @@
       <canvas id="tcpChart" width="400" height="150"></canvas>
     </div>
 
+    <div class="table">
+      <% JSON.parse(res).forEach(function(v){ %>
+        <div class="row <%=v.type%>">
+          <div class="label"><%=v.port%></div>
+          <div class="val" id="val-<%=v.port%>"><%=v.count%></div>
+        </div>
+      <% })%>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     <script>
       let res = JSON.parse('<%- res %>');
@@ -72,6 +81,13 @@
           myChart.update();
       }
 
+      const updateTable = (json) => {
+        json.forEach(v => {
+          const tableVal = document.getElementById("val-"+v.port);
+          tableVal.innerHTML = v.count;
+        });
+      }
+
       var ws = new WebSocket('ws://<%= socketAdress %>/socket');    // event emmited when connected
       ws.onopen = function () {
           console.log('websocket is connected ...')        // sending a send event to websocket server
@@ -81,6 +97,7 @@
           const res = JSON.parse(ev.data);
 
           updateChart(res);
+          updateTable(res);
       }
 
       const resetBtn = document.getElementById("reset");
@@ -90,6 +107,7 @@
         .then(response => response.json())
         .then((res) => {
           updateChart(res);
+          updateTable(res);
         });
       }
     </script>

@@ -46,3 +46,29 @@ h1 .small {
 #reset:hover {
   border: 2px solid rgb(255, 99, 132);
 }
+
+.table {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2px;
+  border: 1px solid rgb(139, 139, 139);
+  border-radius: 3px;
+}
+
+.table .row .label {
+  border-bottom: 1px solid rgb(139, 139, 139);
+  padding: 4px 7px;
+}
+
+.table .row.tcp .label {
+  color: rgb(75, 192, 192);
+}
+
+.table .row.udp .label {
+  color: rgb(255, 99, 132);
+}
+
+.table .row .val {
+  padding: 3px 7px;
+  text-align: center;
+}
