@@ -22,6 +22,11 @@ app.get("/", function(req, res, next) {
   });
 });
 
+app.get("/reset", function(req, res, next) {
+  listen.reset();
+  res.send(JSON.stringify(listen.ports()));
+});
+
 app.ws("/socket", function(ws, req, next) {});
 
 listen.subscribe("test", () => {

@@ -5,7 +5,15 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <h1>TCP and UDP messages count<span class="small">UDP (<span class="pink">pink</span>), TCP (<span class="blue">blue</span>)</span></h1>
+    <div class="flex">
+      <h1>
+        TCP and UDP messages count
+        <span class="small">
+          UDP (<span class="pink">pink</span>), TCP (<span class="blue">blue</span>)
+        </span>
+      </h1>
+      <div id="reset">Reset</div>
+    </div>
 
     <div class="chart-container">
       <canvas id="tcpChart" width="400" height="150"></canvas>
@@ -55,6 +63,15 @@
         }
       });
 
+      const updateChart = (json) => {
+          const labels = json.map(v => v.port);
+          const dataset = json.map(v => v.count);
+
+          myChart.data.labels = labels;
+          myChart.data.datasets[0].data = dataset;
+          myChart.update();
+      }
+
       var ws = new WebSocket('ws://<%= socketAdress %>/socket');    // event emmited when connected
       ws.onopen = function () {
           console.log('websocket is connected ...')        // sending a send event to websocket server
@@ -63,12 +80,17 @@
       ws.onmessage = function (ev) {
           const res = JSON.parse(ev.data);
 
-          const labels = res.map(v => v.port);
-          const dataset = res.map(v => v.count);
+          updateChart(res);
+      }
 
-          myChart.data.labels = labels;
-          myChart.data.datasets[0].data = dataset;
-          myChart.update();
+      const resetBtn = document.getElementById("reset");
+
+      resetBtn.onclick = () => {
+        fetch('/reset')
+        .then(response => response.json())
+        .then((res) => {
+          updateChart(res);
+        });
       }
     </script>
   </body>

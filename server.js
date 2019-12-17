@@ -70,7 +70,15 @@ const getResult = () => {
   return result.sort((a, b) => (b.port > a.port ? -1 : 1));
 };
 
+const reset = () => {
+  packageCountOnTCPPort.forEach((_, key) => {
+    packageCountOnTCPPort.set(key, 0);
+  });
 
+  packageCountOnUDPPort.forEach((_, key) => {
+    packageCountOnUDPPort.set(key, 0);
+  });
+}
 
 const subFunc = (name, cb) => {
   subscribers.set(name, cb);
@@ -79,4 +87,5 @@ const subFunc = (name, cb) => {
 module.exports = {
   ports: getResult,
   subscribe: subFunc,
+  reset
 };

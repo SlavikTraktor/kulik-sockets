@@ -1,10 +1,10 @@
 body {
   padding: 35px;
   background-color: #fff9e6;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 h1 {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
   display: flex;
   align-items: center;
   color: rgb(80, 80, 80);
@@ -24,4 +24,22 @@ h1 .small {
 .blue {
   
   color: rgb(75, 192, 192);
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+#reset {
+  padding: 8px 15px;
+  border: 1px solid rgb(75, 192, 192);
+  border-radius: 7px;
+  transition: .3s;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+#reset:hover {
+  border: 1px solid rgb(255, 99, 132);
 }
