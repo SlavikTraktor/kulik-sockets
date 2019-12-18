@@ -47,6 +47,10 @@ h1 .small {
   border: 2px solid rgb(255, 99, 132);
 }
 
+.table-container {
+  display: flex;
+}
+
 .table {
   display: flex;
   flex-wrap: wrap;
